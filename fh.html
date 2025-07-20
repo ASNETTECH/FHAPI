@@ -291,6 +291,16 @@
             }
         }
         
+        // Base64编码函数
+        function base64Encode(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        // Base64解码函数
+        function base64Decode(str) {
+            return decodeURIComponent(escape(atob(str)));
+        }
+
         // 修复URL获取函数，正确处理#后缀
         function getTargetUrl() {
             // 获取完整的查询字符串（包括#后面的部分）
@@ -300,8 +310,8 @@
             const params = new URLSearchParams(fullQuery);
             const urlParam = params.get('url');
             
-            // 如果URL参数存在，返回它；否则返回默认URL
-            return urlParam || "https://fh.mini7.cn";
+            // 如果URL参数存在，进行Base64解码；否则返回默认URL
+            return urlParam ? base64Decode(urlParam) : "https://fh.mini7.cn";
         }
         
         // 显示目标URL
@@ -328,6 +338,11 @@
             }, 1000);
         }
         
+        // 取消跳转
+        function cancelRedirect() {
+            // 这里可以添加取消跳转后的逻辑，例如显示提示信息
+            alert('跳转已取消');
+        }
         
         // 初始化粒子效果
         createParticles();
